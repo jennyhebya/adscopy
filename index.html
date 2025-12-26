@@ -519,7 +519,7 @@
         let lastGeneratedText = '';
         let placeholderCopied = false;
 
-        const placeholderText = "Pilih bahasa & negara, lalu tekan Generate! ⚡";
+        const placeholderText = "Select mode & country, then hit Generate! ⚡";
 
         function populateAll(mode) {
             const modeData = data[mode].statuses;
@@ -696,21 +696,6 @@
                     statusEl.style.borderLeftColor = '';
                 }, 2000);
             });
-        }
-
-        function animateNumber(id, target) {
-            const el = document.getElementById(id);
-            const start = parseInt(el.textContent) || 0;
-            const duration = 800;
-            const startTime = performance.now();
-            function update(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const current = Math.floor(progress * (target - start) + start);
-                el.textContent = current;
-                if (progress < 1) requestAnimationFrame(update);
-            }
-            requestAnimationFrame(update);
         }
 
         // Inisialisasi
