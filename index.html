@@ -22,7 +22,7 @@
             position: relative;
         }
 
-        /* Partikel bergerak - BESAR & CEPAT */
+        /* Partikel bergerak - WARNA BARU */
         .particles {
             position: fixed;
             top: 0; left: 0;
@@ -32,10 +32,10 @@
         }
         .particle {
             position: absolute;
-            background: rgba(0, 212, 255, 0.4);
+            background: rgba(245, 87, 108, 0.4); /* WARNA BARU */
             border-radius: 50%;
             animation: float linear infinite;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+            box-shadow: 0 0 20px rgba(245, 87, 108, 0.8); /* WARNA BARU */
         }
         @keyframes float {
             0% { 
@@ -63,7 +63,7 @@
             backdrop-filter: blur(15px);
             border-radius: 20px;
             padding: 40px;
-            border: 1px solid rgba(0, 212, 255, 0.3);
+            border: 1px solid rgba(245, 87, 108, 0.3); /* WARNA BARU */
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             animation: fadeInUp 1s ease-out;
             min-height: 90vh;
@@ -78,20 +78,22 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Judul - WARNA BARU */
         h1 {
             font-size: 2.8em;
             text-align: center;
             margin-bottom: 10px;
-            background: linear-gradient(45deg, #00d4ff, #00aaff, #0099cc, #00ffff);
+            background: linear-gradient(45deg, #f093fb, #f5576c, #fda085, #f6d365); /* GRADIEN BARU */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: glowText 4s ease-in-out infinite alternate, floatText 6s ease-in-out infinite;
         }
 
+        /* Efek Cahaya Judul - WARNA BARU */
         @keyframes glowText {
-            from { filter: drop-shadow(0 0 10px #00d4ff); }
-            to { filter: drop-shadow(0 0 25px #00d4ff); }
+            from { filter: drop-shadow(0 0 10px #f5576c); } /* WARNA BARU */
+            to { filter: drop-shadow(0 0 25px #f093fb); } /* WARNA BARU */
         }
 
         @keyframes floatText {
@@ -120,13 +122,14 @@
             flex-wrap: wrap;
         }
 
+        /* Tombol Mode - WARNA BARU */
         .mode-btn {
             padding: 14px 28px;
             font-size: 16px;
             font-weight: 600;
-            border: 2px solid rgba(0, 212, 255, 0.4);
+            border: 2px solid rgba(245, 87, 108, 0.4); /* WARNA BARU */
             border-radius: 15px;
-            background: rgba(0, 212, 255, 0.1);
+            background: rgba(245, 87, 108, 0.1); /* WARNA BARU */
             color: white;
             cursor: pointer;
             transition: all 0.4s ease;
@@ -155,21 +158,22 @@
         }
 
         .mode-btn:hover {
-            background: rgba(0, 212, 255, 0.3);
+            background: rgba(245, 87, 108, 0.3); /* WARNA BARU */
             transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.5);
+            box-shadow: 0 20px 40px rgba(245, 87, 108, 0.5); /* WARNA BARU */
         }
 
         .mode-btn.active {
-            background: linear-gradient(45deg, #00d4ff, #0099cc);
-            border-color: #00d4ff;
-            box-shadow: 0 0 40px rgba(0, 212, 255, 0.8);
+            background: linear-gradient(45deg, #f093fb, #f5576c); /* GRADIEN BARU */
+            border-color: #f5576c; /* WARNA BARU */
+            box-shadow: 0 0 40px rgba(245, 87, 108, 0.8); /* WARNA BARU */
             animation: pulseGlow 2s infinite, buttonFloat 5s ease-in-out infinite;
         }
 
+        /* Efek Pulse Tombol Aktif - WARNA BARU */
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.6); }
-            50% { box-shadow: 0 0 50px rgba(0, 212, 255, 1); }
+            0%, 100% { box-shadow: 0 0 20px rgba(245, 87, 108, 0.6); } /* WARNA BARU */
+            50% { box-shadow: 0 0 50px rgba(240, 147, 251, 1); } /* WARNA BARU */
         }
 
         .main-content {
@@ -186,20 +190,23 @@
             align-items: center;
         }
 
-        .country-selector {
+        .country-selector, .username-selector {
             padding: 20px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
             width: 100%;
             max-width: 450px;
-            border: 1px solid rgba(0, 212, 255, 0.2);
+            border: 1px solid rgba(245, 87, 108, 0.2); /* WARNA BARU */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         select {
             width: 100%;
             padding: 16px;
             font-size: 16px;
-            border: 2px solid rgba(0, 212, 255, 0.3);
+            border: 2px solid rgba(245, 87, 108, 0.3); /* WARNA BARU */
             border-radius: 12px;
             background: rgba(0, 0, 0, 0.4);
             color: white;
@@ -207,11 +214,52 @@
             transition: all 0.3s ease;
         }
 
+        /* Efek Fokus Select - WARNA BARU */
         select:focus {
             outline: none;
-            border-color: #00d4ff;
-            box-shadow: 0 0 25px rgba(0, 212, 255, 0.6);
+            border-color: #f5576c; /* WARNA BARU */
+            box-shadow: 0 0 25px rgba(245, 87, 108, 0.6); /* WARNA BARU */
             transform: scale(1.02);
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(245, 87, 108, 0.3);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+        }
+        input:checked + .slider:before {
+            transform: translateX(30px);
         }
 
         #status {
@@ -224,7 +272,7 @@
             padding: 35px;
             background: rgba(0, 0, 0, 0.4);
             border-radius: 18px;
-            border-left: 6px solid #00d4ff;
+            border-left: 6px solid #f5576c; /* WARNA BARU */
             white-space: pre-line;
             opacity: 0;
             transform: translateY(30px) scale(0.95);
@@ -232,7 +280,7 @@
             backdrop-filter: blur(8px);
             overflow-y: auto;
             max-height: 80vh;
-            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(245, 87, 108, 0.2); /* WARNA BARU */
         }
 
         #status.show {
@@ -251,7 +299,7 @@
             padding: 20px;
             margin-bottom: 20px;
             border-radius: 12px;
-            border: 1px solid rgba(0, 212, 255, 0.2);
+            border: 1px solid rgba(245, 87, 108, 0.2); /* WARNA BARU */
             animation: slideInLeft 0.8s ease-out forwards;
             opacity: 0;
             transform: translateX(-50px);
@@ -266,24 +314,25 @@
             white-space: pre-line;
         }
 
+        /* Tombol Salin Dalam - WARNA BARU */
         .copy-inside-btn {
             padding: 10px 24px;
             font-size: 15px;
             font-weight: 600;
-            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            background: linear-gradient(45deg, #f093fb, #f5576c); /* GRADIEN BARU */
             color: white;
             border: none;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 15px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 6px 15px rgba(245, 87, 108, 0.3); /* WARNA BARU */
             position: relative;
             overflow: hidden;
         }
 
         .copy-inside-btn:hover {
             transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 12px 25px rgba(0, 212, 255, 0.6);
+            box-shadow: 0 12px 25px rgba(245, 87, 108, 0.6); /* WARNA BARU */
         }
 
         .button-group {
@@ -293,17 +342,18 @@
             justify-content: center;
         }
 
+        /* Tombol Utama - WARNA BARU */
         button.main-btn {
             padding: 20px 45px;
             font-size: 19px;
             font-weight: 700;
-            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            background: linear-gradient(45deg, #f093fb, #f5576c); /* GRADIEN BARU */
             color: white;
             border: none;
             border-radius: 18px;
             cursor: pointer;
             transition: all 0.4s ease;
-            box-shadow: 0 12px 35px rgba(0, 212, 255, 0.5);
+            box-shadow: 0 12px 35px rgba(245, 87, 108, 0.5); /* WARNA BARU */
             position: relative;
             overflow: hidden;
             animation: buttonFloat 4s ease-in-out infinite;
@@ -328,7 +378,7 @@
 
         button.main-btn:hover {
             transform: translateY(-8px) scale(1.08);
-            box-shadow: 0 20px 50px rgba(0, 212, 255, 0.7);
+            box-shadow: 0 20px 50px rgba(245, 87, 108, 0.7); /* WARNA BARU */
         }
 
         .stats {
@@ -338,22 +388,24 @@
             padding: 30px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 18px;
-            border: 1px solid rgba(0, 212, 255, 0.2);
+            border: 1px solid rgba(245, 87, 108, 0.2); /* WARNA BARU */
         }
 
+        /* Angka Statistik - WARNA BARU */
         .stat-number {
             font-size: 3.2em;
             font-weight: bold;
-            background: linear-gradient(45deg, #00d4ff, #00ffff);
+            background: linear-gradient(45deg, #f093fb, #f5576c); /* GRADIEN BARU */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: countGlow 3s ease-in-out infinite alternate;
         }
 
+        /* Efek Cahaya Angka Statistik - WARNA BARU */
         @keyframes countGlow {
-            from { filter: drop-shadow(0 0 10px #00d4ff); }
-            to { filter: drop-shadow(0 0 20px #00ffff); }
+            from { filter: drop-shadow(0 0 10px #f5576c); } /* WARNA BARU */
+            to { filter: drop-shadow(0 0 20px #f093fb); } /* WARNA BARU */
         }
 
         @media (max-width: 768px) {
@@ -375,8 +427,9 @@
      
         <div class="mode-tabs">
             <button id="btn-english" class="mode-btn active" onclick="switchLanguage('english')">🌐 English</button>
-            <button id="btn-french" class="mode-btn" onclick="switchLanguage('french')">🇫🇷 French/EU</button>
-            <button id="btn-brazil" class="mode-btn" onclick="switchLanguage('brazil')">🇧🇷 Brazil</button>
+            <button id="btn-french" class="mode-btn" onclick="switchLanguage('french')">🌐 French/EU</button>
+            <button id="btn-brazil" class="mode-btn" onclick="switchLanguage('brazil')">🌐 Brazil</button>
+            <button id="btn-brazil" class="mode-btn" onclick="switchLanguage('germany')">🌐 germany</button>
             <button id="btn-bulk" class="mode-btn" onclick="switchGenerateMode('bulk')">📦 Bulk Mode</button>
             <button id="btn-single" class="mode-btn active" onclick="switchGenerateMode('single')">🔸 Single Mode</button>
         </div>
@@ -387,6 +440,14 @@
                     <label id="countryLabel">Select Country:</label>
                     <select id="countrySelect"></select>
                 </div>
+                <!-- FITUR BARU: Toggle Username -->
+                <div class="username-selector">
+                    <label for="usernameToggle">Use Random Username</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="usernameToggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
                 <div class="button-group">
                     <button class="main-btn" onclick="generateStatus()">🎲 Random</button>
                     <button class="main-btn" onclick="copyStatus()">📋 Copy</button>
@@ -395,6 +456,7 @@
 
             <div id="status">
                 <div class="placeholder-text">Select mode & country, then hit Generate! ⚡</div>
+            </div>
 
             <div class="stats">
                 <div class="stat-item">
@@ -437,6 +499,25 @@
 
         createParticles();
 
+        // --- DATA BARU UNTUK USERNAME ---
+        const firstNames = [
+            "Alex", "Sam", "Jordan", "Taylor", "Morgan", "Casey", "Riley", "Jamie", "Cameron", "Drew", "lourdes", "shelby", "elena", "imelda", "amelia", "jeannine", "rachael", "sandy", "rosalinda",
+            "Avery", "Quinn", "Blake", "Reese", "Emery", "Kai", "River", "Skyler", "Sage", "Rowan", "sofia", "tina", "francesca", "aurelia", "antoinette", "etta", "marcella",
+            "Adara", "Fiona", "Kourtney", "Jasmine", "Tara", "Lena", "Nathalie", "Daphne", "Christiane", "Nicoline", "Carolina", "Alberta", "Jennifer", "Natalie", "Nina"
+        ];
+        const lastNames = [
+            "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez",
+            "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin",
+            "McCormick", "Haney", "Oceane", "Hoferle", "Carter", "Hart", "Verstraete", "Cerfbeer", "Poulin", "Deloffre", "Lancaster", "Ortiz", "Cerfbeer"
+        ];
+        
+        // --- FUNGSI BARU UNTUK MEMBUAT USERNAME ---
+        function generateUsername() {
+            const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+            const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+            return `${firstName} ${lastName}`;
+        }
+
         const data = {
             english: {
                 label: "🌍 Select Country:",
@@ -453,18 +534,17 @@
                 },
                 statuses: {
                     USA: [
-                        "Hello\n\nMy name is Adara\nI am 49\nI wonder how far away we are\nCan you tell me where you are from?",
-                        "You ve got style, old man! My name is anastasiarepgarcia\n. I'm 68 born in 1957 I'll hunt you if I must ✨ I said it once, I'm from USA 🇺🇸 Now your turn — where you are from? 👀 No Kings",
-                        "My name is Fiona McCormick. I'm 62 and grateful.\nIs my age a problem? I was born in 1973",
-                        "Hey old man, I'm Kourtney Haney\nDon't make me come hunt you down 😌🔥\nWhere you from again?\nRelax, I'm just checking our distance 😉\nDon't you dare leave — answer me ✨👀",
-                        "Hi, Old Man.\nAre you married?\nMy name is Frami Oceane\n. I'll hunt you if I must. I'm from Florida. Where you are from? 😼",
-                        "Hi, Old Man… Jasmin Hoferle. I'm from alabama, united states usa 🇺🇸🇺🇸. I asked nicely the first time. Where are you from? Last chance 👀",
+                        "Hello\nMy name is {{USERNAME}}\nI am 49\nI wonder how far away we are\nCan you tell me where you are from?",
+                        "You've got style, old man! My name is {{USERNAME}}. I'm 68 born in 1957 I'll hunt you if I must ✨ I said it once, I'm from USA 🇺🇸 Now your turn — where you are from? 👀 No Kings",
+                        "My name is {{USERNAME}}. I'm 62 and grateful.\nIs my age a problem? I was born in 1973",
+                        "Hey old man, I'm {{USERNAME}}\nDon't make me come hunt you down 😌🔥\nWhere you from again?\nRelax, I'm just checking our distance 😉\nDon't you dare leave — answer me ✨👀",
+                        "Hi, Old Man.\nAre you married?\nMy name is {{USERNAME}}. I'll hunt you if I must. I'm from Florida. Where you are from? 😼",
+                        "Hi, Old Man… {{USERNAME}}. I'm from alabama, united states usa 🇺🇸🇺🇸. I asked nicely the first time. Where are you from? Last chance 👀",
                         "Is my age an problem?\nI'm 62 born in 1963",
                         "𝗛𝗶𝗶\n🟢\n𝗛𝗲𝗹𝗹𝗼..\n💬"
                     ],
-                    UK: ["Hi Old Man.\nMy name is Jasmine Carter\nI'm from UK 🇬🇧.\nWhere you are from?"],
-                    Canada: ["Hi Old Man.\nMy name is Tara Hart I'm from Canada 🇨🇦.\nWhere you are from?"],
-                    Germany: ["l'm from Germany 🇩🇪 and you? 📍"],
+                    UK: ["Hi Old Man.\nMy name is {{USERNAME}}\nI'm from UK 🇬🇧.\nWhere you are from?"],
+                    Canada: ["Hi Old Man.\nMy name is {{USERNAME}} I'm from Canada 🇨🇦.\nWhere you are from?"],
                     Finland: ["l'm from Finland 🇫🇮 and you? 📍"],
                     Australia: [], "New Zealand": [], Ireland: [], all: []
                 }
@@ -480,19 +560,19 @@
                 },
                 statuses: {
                     France: [
-                        "Mon CV 🌺\nNom : Daphne Smith\nÂge : 24 ans\nTaille : 1m68\nPays : France 🇫🇷\nOrigine : France",
-                        "Mon CV 🌺\nPrénom : Christiane Poulin\nÂge : 23 ans\nTaille : 1m68\nPays : France 🇫🇷\nOrigines : Néerlandais 🇳🇱",
-                        "Mon CV 🌺\nNom : Nicoline Deloffre\nÂge : 57 ans\nTaille : 1m73\nPays : France 🇫🇷\nOrigine : Allemand 🇩🇪",
-                        "Mon CV 🌺\nnom : aria\nÂge : 30 ans\nTaille : 1,72 m\nStatut : Célibataire\nProfession : Chef d'entreprise\nPays : France 🇫🇷\nOrigine : Germany 🇩🇪",
-                        "Mon CV 🌺\nPrénom : Carolina\nÂge : 57 ans\nTaille : 1m69\nPays : France 🇫🇷\nOrigines : Lyon, France 🇫🇷",
-                        "Mon CV 🌺\nNom : Alberta Lancaster\nÂge : 38 ans\nStatut : Célibataire\nProfession : psychologue\nTaille : 1,72 m\nOrigine : Lyon, France 🇫🇷\nPays : France 🇫🇷",
-                        "Tu as du style, mon vieux ! 😍\nJe m'appelle Lena Verstraete. Je te traquerai s'il le faut 🕵️‍♀️✨\nJe l'ai dit une fois, je viens de Paris 🇫🇷.\nÀ ton tour, d'où viens-tu ? 👀",
-                        "Je m'appelle Nathalie. Je viens de France. Je suis célibataire, j'ai 42 ans et je lutte contre l'alcoolisme depuis 10 ans. Aujourd'hui, cela fait un an et 10 jours que je suis sobre, soit 375 jours au total. ❤️🩹💔",
+                        "Mon CV 🌺\nNom : {{USERNAME}}\nÂge : 24 ans\nTaille : 1m68\nPays : France 🇫🇷\nOrigine : France",
+                        "Mon CV 🌺\nPrénom : {{USERNAME}}\nÂge : 23 ans\nTaille : 1m68\nPays : France 🇫🇷\nOrigines : Néerlandais 🇳🇱",
+                        "Mon CV 🌺\nNom : {{USERNAME}}\nÂge : 57 ans\nTaille : 1m73\nPays : France 🇫🇷\nOrigine : Allemand 🇩🇪",
+                        "Mon CV 🌺\nnom : {{USERNAME}}\nÂge : 30 ans\nTaille : 1,72 m\nStatut : Célibataire\nProfession : Chef d'entreprise\nPays : France 🇫🇷\nOrigine : Germany 🇩🇪",
+                        "Mon CV 🌺\nPrénom : {{USERNAME}}\nÂge : 57 ans\nTaille : 1m69\nPays : France 🇫🇷\nOrigines : Lyon, France 🇫🇷",
+                        "Mon CV 🌺\nNom : {{USERNAME}}\nÂge : 38 ans\nStatut : Célibataire\nProfession : psychologue\nTaille : 1,72 m\nOrigine : Lyon, France 🇫🇷\nPays : France 🇫🇷",
+                        "Tu as du style, mon vieux ! 😍\nJe m'appelle {{USERNAME}}. Je te traquerai s'il le faut 🕵️‍♀️✨\nJe l'ai dit une fois, je viens de Paris 🇫🇷.\nÀ ton tour, d'où viens-tu ? 👀",
+                        "Je m'appelle {{USERNAME}}. Je viens de France. Je suis célibataire, j'ai 42 ans et je lutte contre l'alcoolisme depuis 10 ans. Aujourd'hui, cela fait un an et 10 jours que je suis sobre, soit 375 jours au total. ❤️🩹💔",
                         "Blandine Cerfbeer t'a mentionné il y a 1 min💌\nÇa ne coûte rien de dire bonjour..\nCoucou tu vas bien ? ☺️"
                     ],
-                    Espagne: ["Mon CV 🌺\nNombre: Jennifer Ortiz\nÂge : 41 ans\nTaille : 1m60\nPays : España 🇪🇸\nOrigine : España 🇪🇸"],
-                    Belgique: ["Mon CV 🌺\nNom : Natalie\nÂge : 38 ans\nTaille : 1m73\nPays : België 🇧🇪\nOrigine : Nederland 🇳🇱"],
-                    Autriche: ["My CV 🌺\nName: Nina\nAge: 38\nHeight: 1.73m\nCountry: Austria 🇦🇹\nOrigin: Switzerland 🇨🇭"],
+                    Espagne: ["Mon CV 🌺\nNombre: {{USERNAME}}\nÂge : 41 ans\nTaille : 1m60\nPays : España 🇪🇸\nOrigine : España 🇪🇸"],
+                    Belgique: ["Mon CV 🌺\nNom : {{USERNAME}}\nÂge : 38 ans\nTaille : 1m73\nPays : België 🇧🇪\nOrigine : Nederland 🇳🇱"],
+                    Autriche: ["My CV 🌺\nName: {{USERNAME}}\nAge: 38\nHeight: 1.73m\nCountry: Austria 🇦🇹\nOrigin: Switzerland 🇨🇭"],
                     all: []
                 }
             },
@@ -505,6 +585,22 @@
                         "Carolina solicitó ser tu amiga en Threads.\n¡Acepto!✅",
                         "👤 Carolina TE MENCIONÓ\n¡Te he amado desde el principio aquí en Threads!\nHay algo en ti que transmite ligereza, verdad y conexión.\nEn serio, tu presencia marca la diferencia.\nEres especial, y necesitaba decirlo.\nGRACIAS POR TU AMISTAD.\n❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️",
                         "Doutora Natália 𝗺𝗮𝗿𝗰𝗼𝘂 𝘃𝗼𝗰𝗲̂!\n𝗡𝗮̃𝗼 𝗾𝘂𝗲𝗿𝗼 𝗽𝗮𝗿𝗲𝗰𝗲𝗿 𝗶𝗻𝘀𝗶𝘀𝘁𝗲𝗻𝘁𝗲, 𝗺𝗮𝘀 𝘀𝗲 𝗻𝗮̃𝗼 𝗮𝗰𝗲𝗶𝘁𝗼𝘂, 𝘁𝘂𝗱𝗼 𝗯𝗲𝗺! 😞\n𝗦𝗼́ 𝗾𝘂𝗲𝗿𝗶𝗮 𝗱𝗶𝘇𝗲𝗿 𝗾𝘂𝗲 𝗳𝗼𝗶 𝗱𝗲 𝗰𝗼𝗿𝗮𝗰̧𝗮̃𝗼 🙏🏻"
+                        "Minha essência não pede permissão.\nGostei 🤷🏻‍♀️☘️50tona",
+                        "Minha essência não pede opinião.❤️🔥"
+                }
+            },
+            germany: {
+                label: "🌍 Select Country:",
+                countries: { all: "🌍 Germany" },
+                statuses: {
+                    all: [
+                        "l'm from Germany 🇩🇪 and you? 📍",
+                        "Hi, I'm 32 || From Germany 🇩🇪 📍",
+                        "riaß eich☺️🫶🏻\nDeutschland 🇩🇪",
+                        "Woher kommt ihr ?\nIch aus Sachsen 🙏🏼",
+                        "gefall ich dir?",
+                        "𝗛𝗶𝗶\n🟢\n𝗛𝗲𝗹𝗹𝗼..\n💬",
+                        "Ich komme aus Deutschland 🇩🇪 und du? 📍"
                     ]
                 }
             }
@@ -584,17 +680,34 @@
             const statusEl = document.getElementById('status');
             statusEl.innerHTML = '';
 
+            // --- LOGIKA BARU UNTUK USERNAME ---
+            const useRandomUsername = document.getElementById('usernameToggle').checked;
+
             if (generateMode === 'single') {
                 const rand = Math.floor(Math.random() * list.length);
-                const text = list[rand];
+                let text = list[rand];
+                
+                let username = "Guest"; // Nama default jika toggle off
+                if (useRandomUsername) {
+                    username = generateUsername();
+                }
+                text = text.replace(/{{USERNAME}}/g, username);
+
                 lastGeneratedText = text;
                 addStatusItem(statusEl, text, true);
                 generatedCount++;
             } else {
+                const generatedTexts = [];
                 list.forEach((text, index) => {
-                    addStatusItem(statusEl, text, false, index * 0.1);
+                    let username = "Guest";
+                    if (useRandomUsername) {
+                        username = generateUsername(); // Buat username baru untuk setiap item di bulk mode
+                    }
+                    const processedText = text.replace(/{{USERNAME}}/g, username);
+                    generatedTexts.push(processedText);
+                    addStatusItem(statusEl, processedText, false, index * 0.1);
                 });
-                lastGeneratedText = list.join('\n\n---\n\n');
+                lastGeneratedText = generatedTexts.join('\n\n---\n\n');
                 generatedCount += list.length;
             }
 
@@ -665,19 +778,38 @@
             const statusEl = document.getElementById('status');
 
             if (!lastGeneratedText && statusEl.querySelector('.placeholder-text') && !placeholderCopied) {
+                const tempDiv = document.createElement('div');
+                tempDiv.className = 'status-item';
+                tempDiv.innerHTML = `
+                    <div class="status-text">${placeholderText}</div>
+                    <div style="text-align: center; margin-top: 15px; color: #00ff7f; font-weight: bold;">
+                        ✅ Tersalin ke clipboard!
+                    </div>
+                `;
+                
+                statusEl.innerHTML = '';
+                statusEl.appendChild(tempDiv);
+                
+                tempDiv.style.background = 'rgba(0, 255, 127, 0.2)';
+                tempDiv.style.borderColor = '#00ff7f';
+                tempDiv.style.transform = 'scale(1.02)';
+                
                 navigator.clipboard.writeText(placeholderText).then(() => {
                     copiedCount++;
                     animateNumber('copiedCount', copiedCount);
                     placeholderCopied = true;
-
-                    statusEl.style.background = 'rgba(0, 255, 127, 0.3)';
-                    statusEl.style.borderLeftColor = '#00ff7f';
                     
                     setTimeout(() => {
-                        statusEl.innerHTML = '';
-                        statusEl.style.background = '';
-                        statusEl.style.borderLeftColor = '';
-                    }, 1000);
+                        tempDiv.style.transition = 'all 0.5s ease';
+                        tempDiv.style.opacity = '0';
+                        tempDiv.style.transform = 'translateY(20px) scale(0.95)';
+                        
+                        setTimeout(() => {
+                            statusEl.innerHTML = '';
+                            statusEl.style.background = '';
+                            statusEl.style.borderLeftColor = '';
+                        }, 500);
+                    }, 2000);
                 });
                 return;
             }
