@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Status Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #0f2027);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(15, 32, 39, 0.7);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.8s ease-out;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            font-size: 2.8em;
+            text-align: center;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #00d4ff, #00aaff, #0099cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glowText 3s ease-in-out infinite alternate;
+        }
+        @keyframes glowText {
+            from { filter: drop-shadow(0 0 10px #00d4ff); }
+            to { filter: drop-shadow(0 0 20px #00d4ff); }
+        }
+        .subtitle {
+            text-align: center;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .mode-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .mode-btn {
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            border-radius: 15px;
+            background: rgba(0, 212, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+        .mode-btn:hover::before {
+            left: 100%;
+        }
+        .mode-btn:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.3);
+        }
+        .mode-btn.active {
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            border-color: #00d4ff;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+            animation: pulseGlow 2s infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.6); }
+            50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.8); }
+        }
+        #status {
+            font-size: 20px;
+            line-height: 1.7;
+            margin: 30px auto;
+            min-height: 200px;
+            max-width: 800px;
+            padding: 35px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 18px;
+            border-left: 6px solid #00d4ff;
+            white-space: pre-line;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            backdrop-filter: blur(8px);
+        }
+        #status.show {
+            opacity: 1;
+            transform: scale(1);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            align-items: center;
+        }
+        .country-selector {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            animation: fadeIn 1s ease-out;
+        }
+        select {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        select:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+        .button-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        button.main-btn {
+            padding: 18px 40px;
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        button.main-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        button.main-btn:active::after {
+            width: 300px;
+            height: 300px;
+        }
+        button.main-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.6);
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            h1 { font-size: 2.2em; }
+            #status { font-size: 18px; padding: 25px; }
+            .mode-btn { width: 260px; }
+            .button-group { flex-direction: column; }
+            button.main-btn { width: 260px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 Random Status Generator</h1>
+        <p class="subtitle">Generate random messages with cool animations</p>
+        
+        <div class="mode-tabs">
+            <button id="btn-english" class="mode-btn active" onclick="switchMode('english')">🌐 English Messages</button>
+            <button id="btn-french" class="mode-btn" onclick="switchMode('french')">🇫🇷 French/EU</button>
+            <button id="btn-brazil" class="mode-btn" onclick="switchMode('brazil')">🇧🇷 Brazil</button>
+        </div>
+
+        <div class="controls">
+            <div class="country-selector">
+                <label id="countryLabel">Select Country:</label>
+                <select id="countrySelect"></select>
+            </div>
+
+            <div id="status">Select mode & country, then hit Generate! ⚡</div>
+
+            <div class="button-group">
+                <button class="main-btn" onclick="generateStatus()">🎲 Generate</button>
+                <button class="main-btn" onclick="copyStatus()">📋 Copy</button>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="generatedCount">0</div>
+                <div class="stat-label">Generated</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="copiedCount">0</div>
+                <div class="stat-label">Copied</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Daftar kota per negara (English mode)
+        const cities = {
+            USA: ["New York", "Los Angeles", "Chicago", "Miami", "Dallas", "Atlanta", "Seattle", "Boston", "San Francisco", "Las Vegas", "Alabama"],
+            UK: ["London", "Manchester", "Birmingham", "Liverpool", "Edinburgh", "Glasgow", "Bristol"],
+            Canada: ["Toronto", "Vancouver", "Montreal", "Calgary", "Ottawa"],
+            Australia: ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide"],
+            "New Zealand": ["Auckland", "Wellington", "Christchurch"],
+            Ireland: ["Dublin", "Cork", "Galway", "Limerick"],
+            Germany: ["Berlin", "Munich", "Hamburg", "Cologne", "Frankfurt", "Stuttgart"],
+            Finland: ["Helsinki", "Espoo", "Tampere", "Turku", "Oulu"]
+        };
+
+        // ===== DATA (sama persis dengan sebelumnya) =====
+        const data = {
+            english: {
+                label: "🌍 Select Country:",
+                countries: {
+                    all: "🌍 All Countries (random city)",
+                    USA: "🇺🇸 USA",
+                    UK: "🇬🇧 UK",
+                    Canada: "🇨🇦 Canada",
+                    Australia: "🇦🇺 Australia",
+                    "New Zealand": "🇳🇿 New Zealand",
+                    Ireland: "🇮🇪 Ireland",
+                    Germany: "🇩🇪 Germany",
+                    Finland: "🇫🇮 Finland"
+                },
+                statuses: {
+                    USA: [
+                        "Hello\n\nMy name is Adara\nI am 49\nI wonder how far away we are\nCan you tell me where you are from?",
+                        "You ve got style, old man! My name is anastasiarepgarcia\n. I'm 68 born in 1957 I'll hunt you if I must ✨ I said it once, I'm from USA 🇺🇸 Now your turn — where you are from? 👀 No Kings",
+                        "My name is Fiona McCormick. I'm 62 and grateful.\nIs my age a problem? I was born in 1973",
+                        "Hey old man, I'm Kourtney Haney\nDon't make me come hunt you down 😌🔥\nWhere you from again?\nRelax, I'm just checking our distance 😉\nDon't you dare leave — answer me ✨👀",
+                        "Hi, Old Man.\nAre you married?\nMy name is Frami Oceane\n. I'll hunt you if I must. I'm from Florida. Where you are from? 😼",
+                        "Hi, Old Man… Jasmin Hoferle. I'm from alabama, united states usa 🇺🇸🇺🇸. I asked nicely the first time. Where are you from? Last chance 👀",
+                        "Is my age an problem?\nI'm 62 born in 1963",
+                        "𝗛𝗶𝗶\n🟢\n𝗛𝗲𝗹𝗹𝗼..\n💬"
+                    ],
+                    UK: [
+                        "Hi Old Man.\nMy name is Jasmine Carter\nI'm from UK 🇬🇧.\nWhere you are from?"
+                    ],
+                    Canada: [
+                        "Hi Old Man.\nMy name is Tara Hart I'm from Canada 🇨🇦.\nWhere you are from?"
+                    ],
+                    Germany: ["l'm from Germany 🇩🇪 and you? 📍"],
+                    Finland: ["l'm from Finland 🇫🇮 and you? 📍"],
+                    Australia: [],
+                    "New Zealand": [],
+                    Ireland: [],
+                    all: []
+                }
+            },
+            french: {
+                label: "🌍 Choisir le pays :",
+                countries: {
+                    all: "🌍 Tous les pays",
+                    France: "🇫🇷 France",
+                    Espagne: "🇪🇸 Espagne",
+                    Belgique: "🇧🇪 Belgique",
+                    Autriche: "🇦🇹 Autriche"
+                },
+                statuses: {
+                    France: [
+                        "Mon CV 🌺\nNom : Daphne Smith\nÂge : 24 ans\nTaille : 1m68\nPays : France 🇫🇷\nOrigine : France",
+                        "Mon CV 🌺\nPrénom : Christiane Poulin\nÂge : 23 ans\nTaille : 1m68\nPays : France 🇫🇷\nOrigines : Néerlandais 🇳🇱",
+                        "Mon CV 🌺\nNom : Nicoline Deloffre\nÂge : 57 ans\nTaille : 1m73\nPays : France 🇫🇷\nOrigine : Allemand 🇩🇪",
+                        "Mon CV 🌺\nnom : aria\nÂge : 30 ans\nTaille : 1,72 m\nStatut : Célibataire\nProfession : Chef d'entreprise\nPays : France 🇫🇷\nOrigine : Germany 🇩🇪",
+                        "Mon CV 🌺\nPrénom : Carolina\nÂge : 57 ans\nTaille : 1m69\nPays : France 🇫🇷\nOrigines : Lyon, France 🇫🇷",
+                        "Mon CV 🌺\nNom : Alberta Lancaster\nÂge : 38 ans\nStatut : Célibataire\nProfession : psychologue\nTaille : 1,72 m\nOrigine : Lyon, France 🇫🇷\nPays : France 🇫🇷",
+                        "Tu as du style, mon vieux ! 😍\nJe m'appelle Lena Verstraete. Je te traquerai s'il le faut 🕵️‍♀️✨\nJe l'ai dit une fois, je viens de Paris 🇫🇷.\nÀ ton tour, d'où viens-tu ? 👀",
+                        "Je m'appelle Nathalie. Je viens de France. Je suis célibataire, j'ai 42 ans et je lutte contre l'alcoolisme depuis 10 ans. Aujourd'hui, cela fait un an et 10 jours que je suis sobre, soit 375 jours au total. ❤️🩹💔",
+                        "Blandine Cerfbeer t'a mentionné il y a 1 min💌\nÇa ne coûte rien de dire bonjour..\nCoucou tu vas bien ? ☺️"
+                    ],
+                    Espagne: ["Mon CV 🌺\nNombre: Jennifer Ortiz\nÂge : 41 ans\nTaille : 1m60\nPays : España 🇪🇸\nOrigine : España 🇪🇸"],
+                    Belgique: ["Mon CV 🌺\nNom : Natalie\nÂge : 38 ans\nTaille : 1m73\nPays : België 🇧🇪\nOrigine : Nederland 🇳🇱"],
+                    Autriche: ["My CV 🌺\nName: Nina\nAge: 38\nHeight: 1.73m\nCountry: Austria 🇦🇹\nOrigin: Switzerland 🇨🇭"],
+                    all: []
+                }
+            },
+            brazil: {
+                label: "🌍 Escolher país:",
+                countries: { all: "🌍 Todos (Brasil)" },
+                statuses: {
+                    all: [
+                        "Querido por qué no hablamos por Messenger siempre te digo es que esta aplicación hay cantidades de perfiles que uno no sabe si en realidad lo que uno escribe se le se vale escrito para la persona que no quiere o de pronto estos escritos se van para otro perfil eso es que no me gusta",
+                        "Carolina solicitó ser tu amiga en Threads.\n¡Acepto!✅",
+                        "👤 Carolina TE MENCIONÓ\n¡Te he amado desde el principio aquí en Threads!\nHay algo en ti que transmite ligereza, verdad y conexión.\nEn serio, tu presencia marca la diferencia.\nEres especial, y necesitaba decirlo.\nGRACIAS POR TU AMISTAD.\n❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️",
+						Doutora Natália 𝗺𝗮𝗿𝗰𝗼𝘂 𝘃𝗼𝗰𝗲̂!\n𝗡𝗮̃𝗼 𝗾𝘂𝗲𝗿𝗼 𝗽𝗮𝗿𝗲𝗰𝗲𝗿 𝗶𝗻𝘀𝗶𝘀𝘁𝗲𝗻𝘁𝗲, 𝗺𝗮𝘀 𝘀𝗲 𝗻𝗮̃𝗼 𝗮𝗰𝗲𝗶𝘁𝗼𝘂, 𝘁𝘂𝗱𝗼 𝗯𝗲𝗺! 😞\n𝗦𝗼́ 𝗾𝘂𝗲𝗿𝗶𝗮 𝗱𝗶𝘇𝗲𝗿 𝗾𝘂𝗲 𝗳𝗼𝗶 𝗱𝗲 𝗰𝗼𝗿𝗮𝗰̧𝗮̃𝗼 🙏🏻",
+                    ]
+                }
+            }
+        };
+
+        let currentMode = 'english';
+        let generatedCount = 0;
+        let copiedCount = 0;
+        let currentText = '';
+
+        function populateAll(mode) {
+            const modeData = data[mode].statuses;
+            if (modeData.all !== undefined) {
+                modeData.all = [];
+                Object.keys(modeData).forEach(key => {
+                    if (key !== 'all') modeData.all = modeData.all.concat(modeData[key]);
+                });
+            }
+        }
+        populateAll('english'); populateAll('french');
+
+        function getRandomCity(country) {
+            const countryCities = cities[country] || [];
+            if (countryCities.length === 0) return '';
+            return countryCities[Math.floor(Math.random() * countryCities.length)];
+        }
+
+        function switchMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${mode}`).classList.add('active');
+            document.getElementById('countryLabel').textContent = data[mode].label;
+            
+            const select = document.getElementById('countrySelect');
+            select.innerHTML = '';
+            Object.keys(data[mode].countries).forEach(key => {
+                const opt = document.createElement('option');
+                opt.value = key;
+                opt.textContent = data[mode].countries[key];
+                select.appendChild(opt);
+            });
+            
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = `Mode ${mode.toUpperCase()} activated! Ready to generate ⚡`;
+            statusEl.classList.remove('show');
+            setTimeout(() => statusEl.classList.add('show'), 100);
+            currentText = '';
+        }
+
+        function generateStatus() {
+            const select = document.getElementById('countrySelect');
+            const selectedCountry = select.value;
+            let list = data[currentMode].statuses[selectedCountry];
+            
+            if (!list || list.length === 0) {
+                document.getElementById('status').textContent = 'No data available.';
+                return;
+            }
+            
+            const rand = Math.floor(Math.random() * list.length);
+            let text = list[rand];
+
+            if (currentMode === 'english') {
+                // logic kota random sama seperti sebelumnya
+                if (selectedCountry !== 'all') {
+                    const city = getRandomCity(selectedCountry);
+                    if (city) {
+                        const emoji = /* sama */;
+                        text += `\n\nI'm from ${city}, ${emoji}.\nWhere are you from? 📍`;
+                    }
+                } else {
+                    // random all countries
+                    const countries = Object.keys(cities);
+                    const rc = countries[Math.floor(Math.random() * countries.length)];
+                    const city = getRandomCity(rc);
+                    const emoji = /* sama */;
+                    text += `\n\nI'm from ${city}, ${emoji}.\nWhere are you from? 📍`;
+                }
+            }
+
+            currentText = text;
+            const statusEl = document.getElementById('status');
+            statusEl.classList.remove('show');
+            setTimeout(() => {
+                statusEl.textContent = text;
+                statusEl.classList.add('show');
+            }, 300);
+
+            generatedCount++;
+            animateNumber('generatedCount', generatedCount);
+        }
+
+        function copyStatus() {
+            if (!currentText) return;
+            navigator.clipboard.writeText(currentText).then(() => {
+                copiedCount++;
+                animateNumber('copiedCount', copiedCount);
+                
+                const el = document.getElementById('status');
+                const orig = el.textContent;
+                el.textContent = '✅ COPIED SUCCESSFULLY!\n\n' + orig;
+                el.style.background = 'rgba(0, 255, 127, 0.3)';
+                el.style.borderLeftColor = '#00ff7f';
+                
+                setTimeout(() => {
+                    el.textContent = orig;
+                    el.style.background = 'rgba(0, 0, 0, 0.4)';
+                    el.style.borderLeftColor = '#00d4ff';
+                }, 2000);
+            });
+        }
+
+        function animateNumber(id, target) {
+            const el = document.getElementById(id);
+            const start = parseInt(el.textContent) || 0;
+            const duration = 800;
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = Math.floor(progress * (target - start) + start);
+                el.textContent = current;
+                if (progress < 1) requestAnimationFrame(update);
+            }
+            requestAnimationFrame(update);
+        }
+
+        function updateStats() { /* jika perlu */ }
+
+        switchMode('english');
+    </script>
+</body>
+</html>
