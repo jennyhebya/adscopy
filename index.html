@@ -698,6 +698,21 @@
             });
         }
 
+        function animateNumber(id, target) {
+            const el = document.getElementById(id);
+            const start = parseInt(el.textContent) || 0;
+            const duration = 800;
+            const startTime = performance.now();
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = Math.floor(progress * (target - start) + start);
+                el.textContent = current;
+                if (progress < 1) requestAnimationFrame(update);
+            }
+            requestAnimationFrame(update);
+        }
+
         // Inisialisasi
         switchLanguage('english');
         switchGenerateMode('single');
