@@ -18,12 +18,38 @@
             color: #ffffff;
             min-height: 100vh;
             padding: 20px;
+            overflow-x: hidden;
+            position: relative;
         }
+
+        /* Partikel bergerak di latar belakang */
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            background: rgba(0, 212, 255, 0.3);
+            border-radius: 50%;
+            animation: float linear infinite;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
+        }
+
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
+
         .container {
             max-width: 1000px;
             margin: 0 auto;
@@ -33,32 +59,53 @@
             padding: 40px;
             border: 1px solid rgba(0, 212, 255, 0.3);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            animation: fadeInUp 0.8s ease-out;
+            animation: fadeInUp 1s ease-out;
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 2;
         }
+
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(50px); }
+            from { opacity: 0; transform: translateY(60px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         h1 {
             font-size: 2.8em;
             text-align: center;
             margin-bottom: 10px;
-            background: linear-gradient(45deg, #00d4ff, #00aaff, #0099cc);
+            background: linear-gradient(45deg, #00d4ff, #00aaff, #0099cc, #00ffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: glowText 3s ease-in-out infinite alternate;
+            animation: glowText 4s ease-in-out infinite alternate, floatText 6s ease-in-out infinite;
         }
+
         @keyframes glowText {
             from { filter: drop-shadow(0 0 10px #00d4ff); }
-            to { filter: drop-shadow(0 0 20px #00d4ff); }
+            to { filter: drop-shadow(0 0 25px #00d4ff); }
         }
+
+        @keyframes floatText {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
         .subtitle {
             text-align: center;
             opacity: 0.9;
             margin-bottom: 30px;
             font-size: 1.1em;
+            animation: fadeIn 2s ease-out;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .mode-tabs {
             display: flex;
             justify-content: center;
@@ -66,6 +113,7 @@
             margin-bottom: 40px;
             flex-wrap: wrap;
         }
+
         .mode-btn {
             padding: 14px 28px;
             font-size: 16px;
@@ -79,68 +127,139 @@
             backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
+            animation: buttonFloat 5s ease-in-out infinite;
         }
+
+        @keyframes buttonFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
         .mode-btn::before {
             content: '';
             position: absolute;
             top: 0; left: -100%;
             width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.7s;
         }
+
         .mode-btn:hover::before {
             left: 100%;
         }
+
         .mode-btn:hover {
-            background: rgba(0, 212, 255, 0.2);
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.3);
+            background: rgba(0, 212, 255, 0.3);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.5);
         }
+
         .mode-btn.active {
             background: linear-gradient(45deg, #00d4ff, #0099cc);
             border-color: #00d4ff;
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
-            animation: pulseGlow 2s infinite;
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.8);
+            animation: pulseGlow 2s infinite, buttonFloat 5s ease-in-out infinite;
         }
+
         @keyframes pulseGlow {
             0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.6); }
-            50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.8); }
+            50% { box-shadow: 0 0 50px rgba(0, 212, 255, 1); }
         }
+
+        .main-content {
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            flex: 1;
+            gap: 30px;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .country-selector {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        select {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.6);
+            transform: scale(1.02);
+        }
+
         #status {
             font-size: 20px;
             line-height: 1.7;
-            margin: 30px auto;
-            min-height: 200px;
-            max-width: 800px;
+            margin: 0 auto;
+            min-height: 300px;
+            max-width: 900px;
+            width: 100%;
             padding: 35px;
             background: rgba(0, 0, 0, 0.4);
             border-radius: 18px;
             border-left: 6px solid #00d4ff;
             white-space: pre-line;
             opacity: 0;
-            transform: scale(0.95);
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
             backdrop-filter: blur(8px);
-            position: relative;
             overflow-y: auto;
-            max-height: 70vh;
-        }
-        #status.show {
-            opacity: 1;
-            transform: scale(1);
+            max-height: 80vh;
             box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
         }
+
+        #status.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .placeholder-text {
+            text-align: center;
+            opacity: 0.7;
+            font-size: 1.1em;
+        }
+
         .status-item {
             background: rgba(255, 255, 255, 0.05);
             padding: 20px;
             margin-bottom: 20px;
             border-radius: 12px;
             border: 1px solid rgba(0, 212, 255, 0.2);
+            animation: slideInLeft 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateX(-50px);
         }
+
+        @keyframes slideInLeft {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
         .status-text {
             margin-bottom: 15px;
             white-space: pre-line;
         }
+
         .copy-inside-btn {
             padding: 10px 24px;
             font-size: 15px;
@@ -152,64 +271,60 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 6px 15px rgba(0, 212, 255, 0.3);
+            position: relative;
+            overflow: hidden;
         }
+
         .copy-inside-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.5);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(0, 212, 255, 0.6);
         }
-        .controls {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            align-items: center;
-        }
-        .country-selector {
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            width: 100%;
-            max-width: 450px;
-            border: 1px solid rgba(0, 212, 255, 0.2);
-        }
-        select {
-            width: 100%;
-            padding: 16px;
-            font-size: 16px;
-            border: 2px solid rgba(0, 212, 255, 0.3);
-            border-radius: 12px;
-            background: rgba(0, 0, 0, 0.4);
-            color: white;
-            backdrop-filter: blur(10px);
-        }
-        select:focus {
-            outline: none;
-            border-color: #00d4ff;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
-        }
+
         .button-group {
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
             justify-content: center;
         }
+
         button.main-btn {
-            padding: 18px 40px;
-            font-size: 18px;
+            padding: 20px 45px;
+            font-size: 19px;
             font-weight: 700;
             background: linear-gradient(45deg, #00d4ff, #0099cc);
             color: white;
             border: none;
-            border-radius: 15px;
+            border-radius: 18px;
             cursor: pointer;
             transition: all 0.4s ease;
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+            box-shadow: 0 12px 35px rgba(0, 212, 255, 0.5);
             position: relative;
             overflow: hidden;
+            animation: buttonFloat 4s ease-in-out infinite;
         }
+
+        button.main-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+            pointer-events: none;
+        }
+
+        button.main-btn:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
         button.main-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.6);
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 0 20px 50px rgba(0, 212, 255, 0.7);
         }
+
         .stats {
             display: flex;
             justify-content: space-around;
@@ -219,65 +334,101 @@
             border-radius: 18px;
             border: 1px solid rgba(0, 212, 255, 0.2);
         }
-        .stat-item {
-            text-align: center;
-        }
+
         .stat-number {
-            font-size: 3em;
+            font-size: 3.2em;
             font-weight: bold;
-            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            background: linear-gradient(45deg, #00d4ff, #00ffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: countGlow 3s ease-in-out infinite alternate;
         }
+
+        @keyframes countGlow {
+            from { filter: drop-shadow(0 0 10px #00d4ff); }
+            to { filter: drop-shadow(0 0 20px #00ffff); }
+        }
+
         @media (max-width: 768px) {
             .container { padding: 20px; }
             h1 { font-size: 2.2em; }
-            #status { font-size: 18px; padding: 25px; }
+            #status { font-size: 18px; padding: 25px; max-height: 70vh; }
             .mode-btn { width: 260px; }
             .button-group { flex-direction: column; }
-            button.main-btn { width: 260px; }
+            button.main-btn { width: 260px; padding: 18px 40px; }
         }
     </style>
 </head>
 <body>
+    <!-- Partikel bergerak -->
+    <div class="particles" id="particles"></div>
+
     <div class="container">
         <h1>🌐 Random Status Generator</h1>
-        <p class="subtitle">Generate random or bulk messages with cool animations</p>
-      
+        <p class="subtitle">Generate random or bulk messages with stunning animations ✨</p>
+     
         <div class="mode-tabs">
             <button id="btn-english" class="mode-btn active" onclick="switchLanguage('english')">🌐 English</button>
             <button id="btn-french" class="mode-btn" onclick="switchLanguage('french')">🇫🇷 French/EU</button>
             <button id="btn-brazil" class="mode-btn" onclick="switchLanguage('brazil')">🇧🇷 Brazil</button>
             <button id="btn-bulk" class="mode-btn" onclick="switchGenerateMode('bulk')">📦 Bulk Mode</button>
-            <button id="btn-single" class="mode-btn" onclick="switchGenerateMode('single')">🔸 Single Mode</button>
+            <button id="btn-single" class="mode-btn active" onclick="switchGenerateMode('single')">🔸 Single Mode</button>
         </div>
-        
-        <div class="controls">
-            <div class="country-selector">
-                <label id="countryLabel">Select Country:</label>
-                <select id="countrySelect"></select>
+
+        <div class="main-content">
+            <div class="controls">
+                <div class="country-selector">
+                    <label id="countryLabel">Select Country:</label>
+                    <select id="countrySelect"></select>
+                </div>
+                <div class="button-group">
+                    <button class="main-btn" onclick="generateStatus()">🎲 Generate</button>
+                    <button class="main-btn" onclick="copyStatus()">📋 Copy (Last)</button>
+                </div>
             </div>
-            <div id="status">Pilih bahasa & negara, lalu tekan Generate! ⚡</div>
-            <div class="button-group">
-                <button class="main-btn" onclick="generateStatus()">🎲 Generate</button>
-                <button class="main-btn" onclick="copyStatus()">📋 Copy (Last)</button>
+
+            <div id="status">
+                <div class="placeholder-text">Select mode & country, then hit Generate! ⚡</div>
             </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-number" id="generatedCount">0</div>
-                <div class="stat-label">Generated</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" id="copiedCount">0</div>
-                <div class="stat-label">Copied</div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="generatedCount">0</div>
+                    <div class="stat-label">Generated</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="copiedCount">0</div>
+                    <div class="stat-label">Copied</div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Generate floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const count = 30;
+
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 8 + 4;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.animationDuration = `${Math.random() * 20 + 15}s`;
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+                particle.style.opacity = Math.random() * 0.6 + 0.2;
+
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
         const data = {
             english: {
                 label: "🌍 Select Country:",
@@ -294,7 +445,7 @@
                 },
                 statuses: {
                     USA: [
-                        "Hello\n\nMy name is Adara\nI am 49\nI wonder how far away we are\nCan you tell me where you are from?",
+                        "Hello\nMy name is Adara\nI am 49\nI wonder how far away we are\nCan you tell me where you are from?",
                         "You ve got style, old man! My name is anastasiarepgarcia\n. I'm 68 born in 1957 I'll hunt you if I must ✨ I said it once, I'm from USA 🇺🇸 Now your turn — where you are from? 👀 No Kings",
                         "My name is Fiona McCormick. I'm 62 and grateful.\nIs my age a problem? I was born in 1973",
                         "Hey old man, I'm Kourtney Haney\nDon't make me come hunt you down 😌🔥\nWhere you from again?\nRelax, I'm just checking our distance 😉\nDon't you dare leave — answer me ✨👀",
@@ -303,18 +454,11 @@
                         "Is my age an problem?\nI'm 62 born in 1963",
                         "𝗛𝗶𝗶\n🟢\n𝗛𝗲𝗹𝗹𝗼..\n💬"
                     ],
-                    UK: [
-                        "Hi Old Man.\nMy name is Jasmine Carter\nI'm from UK 🇬🇧.\nWhere you are from?"
-                    ],
-                    Canada: [
-                        "Hi Old Man.\nMy name is Tara Hart I'm from Canada 🇨🇦.\nWhere you are from?"
-                    ],
+                    UK: ["Hi Old Man.\nMy name is Jasmine Carter\nI'm from UK 🇬🇧.\nWhere you are from?"],
+                    Canada: ["Hi Old Man.\nMy name is Tara Hart I'm from Canada 🇨🇦.\nWhere you are from?"],
                     Germany: ["l'm from Germany 🇩🇪 and you? 📍"],
                     Finland: ["l'm from Finland 🇫🇮 and you? 📍"],
-                    Australia: [],
-                    "New Zealand": [],
-                    Ireland: [],
-                    all: []
+                    Australia: [], "New Zealand": [], Ireland: [], all: []
                 }
             },
             french: {
@@ -352,7 +496,6 @@
                         "Querido por qué no hablamos por Messenger siempre te digo es que esta aplicación hay cantidades de perfiles que uno no sabe si en realidad lo que uno escribe se le se vale escrito para la persona que no quiere o de pronto estos escritos se van para otro perfil eso es que no me gusta",
                         "Carolina solicitó ser tu amiga en Threads.\n¡Acepto!✅",
                         "👤 Carolina TE MENCIONÓ\n¡Te he amado desde el principio aquí en Threads!\nHay algo en ti que transmite ligereza, verdad y conexión.\nEn serio, tu presencia marca la diferencia.\nEres especial, y necesitaba decirlo.\nGRACIAS POR TU AMISTAD.\n❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️",
-                        "Carolina solicitó ser tu amiga en Threads.\n¡Acepto!✅",
                         "Doutora Natália 𝗺𝗮𝗿𝗰𝗼𝘂 𝘃𝗼𝗰𝗲̂!\n𝗡𝗮̃𝗼 𝗾𝘂𝗲𝗿𝗼 𝗽𝗮𝗿𝗲𝗰𝗲𝗿 𝗶𝗻𝘀𝗶𝘀𝘁𝗲𝗻𝘁𝗲, 𝗺𝗮𝘀 𝘀𝗲 𝗻𝗮̃𝗼 𝗮𝗰𝗲𝗶𝘁𝗼𝘂, 𝘁𝘂𝗱𝗼 𝗯𝗲𝗺! 😞\n𝗦𝗼́ 𝗾𝘂𝗲𝗿𝗶𝗮 𝗱𝗶𝘇𝗲𝗿 𝗾𝘂𝗲 𝗳𝗼𝗶 𝗱𝗲 𝗰𝗼𝗿𝗮𝗰̧𝗮̃𝗼 🙏🏻"
                     ]
                 }
@@ -360,10 +503,13 @@
         };
 
         let currentLanguage = 'english';
-        let generateMode = 'single'; // 'single' atau 'bulk'
+        let generateMode = 'single';
         let generatedCount = 0;
         let copiedCount = 0;
         let lastGeneratedText = '';
+        let placeholderCopied = false; // Flag untuk menandai placeholder sudah dicopy
+
+        const placeholderText = "Pilih bahasa & negara, lalu tekan Generate! ⚡";
 
         function populateAll(mode) {
             const modeData = data[mode].statuses;
@@ -409,7 +555,11 @@
 
         function clearStatus() {
             const statusEl = document.getElementById('status');
-            statusEl.innerHTML = '<div style="text-align:center; opacity:0.7;">Pilih mode & negara, lalu generate!</div>';
+            if (!placeholderCopied) {
+                statusEl.innerHTML = `<div class="placeholder-text">${placeholderText}</div>`;
+            } else {
+                statusEl.innerHTML = ''; // Kosong total jika placeholder sudah dicopy
+            }
             statusEl.classList.add('show');
             lastGeneratedText = '';
         }
@@ -417,7 +567,6 @@
         function generateStatus() {
             const selectedCountry = document.getElementById('countrySelect').value;
             let list = data[currentLanguage].statuses[selectedCountry] || [];
-
             if (list.length === 0) {
                 document.getElementById('status').innerHTML = '<div class="status-item">No status available for this country.</div>';
                 document.getElementById('status').classList.add('show');
@@ -425,41 +574,42 @@
             }
 
             const statusEl = document.getElementById('status');
+            statusEl.innerHTML = ''; // Hapus placeholder atau status lama
 
             if (generateMode === 'single') {
                 const rand = Math.floor(Math.random() * list.length);
                 const text = list[rand];
                 lastGeneratedText = text;
-
-                statusEl.innerHTML = `
-                    <div class="status-item">
-                        <div class="status-text">${text.replace(/\n/g, '<br>')}</div>
-                        <button class="copy-inside-btn" onclick="copyThisStatus('${escapeJsString(text)}')">📋 Copy This</button>
-                    </div>
+                const item = document.createElement('div');
+                item.className = 'status-item';
+                item.innerHTML = `
+                    <div class="status-text">${text.replace(/\n/g, '<br>')}</div>
+                    <button class="copy-inside-btn" onclick="copyThisStatus('${escapeJsString(text)}')">📋 Copy This</button>
                 `;
+                statusEl.appendChild(item);
                 generatedCount++;
             } else {
-                // Bulk mode
-                let html = '';
                 list.forEach((text, index) => {
-                    html += `
-                        <div class="status-item">
-                            <div class="status-text">${text.replace(/\n/g, '<br>')}</div>
-                            <button class="copy-inside-btn" onclick="copyThisStatus('${escapeJsString(text)}')">📋 Copy #${index + 1}</button>
-                        </div>
+                    const item = document.createElement('div');
+                    item.className = 'status-item';
+                    item.style.animationDelay = `${index * 0.1}s`;
+                    item.innerHTML = `
+                        <div class="status-text">${text.replace(/\n/g, '<br>')}</div>
+                        <button class="copy-inside-btn" onclick="copyThisStatus('${escapeJsString(text)}')">📋 Copy #${index + 1}</button>
                     `;
+                    statusEl.appendChild(item);
                 });
-                statusEl.innerHTML = html || '<div>No statuses found.</div>';
-                lastGeneratedText = list.join('\n\n---\n\n'); // untuk copy all
+                lastGeneratedText = list.join('\n\n---\n\n');
                 generatedCount += list.length;
             }
 
+            placeholderCopied = false; // Reset flag saat generate baru
+
             animateNumber('generatedCount', generatedCount);
 
-            // Animasi masuk
             void statusEl.offsetWidth;
             statusEl.classList.remove('show');
-            statusEl.classList.add('show');
+            setTimeout(() => statusEl.classList.add('show'), 100);
         }
 
         function escapeJsString(str) {
@@ -470,7 +620,6 @@
             navigator.clipboard.writeText(text).then(() => {
                 copiedCount++;
                 animateNumber('copiedCount', copiedCount);
-
                 const btn = event.target;
                 const orig = btn.textContent;
                 btn.textContent = '✅ Copied!';
@@ -483,18 +632,40 @@
         }
 
         function copyStatus() {
+            const statusEl = document.getElementById('status');
+
+            // Jika masih placeholder dan belum pernah dicopy
+            if (!lastGeneratedText && statusEl.querySelector('.placeholder-text') && !placeholderCopied) {
+                navigator.clipboard.writeText(placeholderText).then(() => {
+                    copiedCount++;
+                    animateNumber('copiedCount', copiedCount);
+                    placeholderCopied = true;
+
+                    // Efek visual sukses copy
+                    statusEl.style.background = 'rgba(0, 255, 127, 0.3)';
+                    statusEl.style.borderLeftColor = '#00ff7f';
+                    
+                    // Hapus placeholder setelah 1 detik
+                    setTimeout(() => {
+                        statusEl.innerHTML = '';
+                        statusEl.style.background = '';
+                        statusEl.style.borderLeftColor = '';
+                    }, 1000);
+                });
+                return;
+            }
+
+            // Jika ada status yang di-generate
             if (!lastGeneratedText) return;
+
             navigator.clipboard.writeText(lastGeneratedText).then(() => {
                 copiedCount++;
                 animateNumber('copiedCount', copiedCount);
-
-                const el = document.getElementById('status');
-                el.style.background = 'rgba(0, 255, 127, 0.3)';
-                el.style.borderLeftColor = '#00ff7f';
-
+                statusEl.style.background = 'rgba(0, 255, 127, 0.3)';
+                statusEl.style.borderLeftColor = '#00ff7f';
                 setTimeout(() => {
-                    el.style.background = '';
-                    el.style.borderLeftColor = '';
+                    statusEl.style.background = '';
+                    statusEl.style.borderLeftColor = '';
                 }, 2000);
             });
         }
@@ -515,7 +686,6 @@
         }
 
         // Inisialisasi
-        // Pastikan tempel data lengkap di atas sebelum ini
         switchLanguage('english');
         switchGenerateMode('single');
     </script>
