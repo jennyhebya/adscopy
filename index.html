@@ -422,14 +422,11 @@
     <div class="particles" id="particles"></div>
 
     <div class="container">
-        <h1>🌐 Random Status Generator</h1>
-        <p class="subtitle">Generate random or bulk messages with stunning animations ✨</p>
-     
         <div class="mode-tabs">
             <button id="btn-english" class="mode-btn active" onclick="switchLanguage('english')">🌐 English</button>
             <button id="btn-french" class="mode-btn" onclick="switchLanguage('french')">🌐 French/EU</button>
             <button id="btn-brazil" class="mode-btn" onclick="switchLanguage('brazil')">🌐 Brazil</button>
-            <button id="btn-brazil" class="mode-btn" onclick="switchLanguage('germany')">🌐 germany</button>
+            <button id="btn-germany" class="mode-btn" onclick="switchLanguage('germany')">🌐 Germany</button>
             <button id="btn-bulk" class="mode-btn" onclick="switchGenerateMode('bulk')">📦 Bulk Mode</button>
             <button id="btn-single" class="mode-btn active" onclick="switchGenerateMode('single')">🔸 Single Mode</button>
         </div>
@@ -584,9 +581,10 @@
                         "Querido por qué no hablamos por Messenger siempre te digo es que esta aplicación hay cantidades de perfiles que uno no sabe si en realidad lo que uno escribe se le se vale escrito para la persona que no quiere o de pronto estos escritos se van para otro perfil eso es que no me gusta",
                         "Carolina solicitó ser tu amiga en Threads.\n¡Acepto!✅",
                         "👤 Carolina TE MENCIONÓ\n¡Te he amado desde el principio aquí en Threads!\nHay algo en ti que transmite ligereza, verdad y conexión.\nEn serio, tu presencia marca la diferencia.\nEres especial, y necesitaba decirlo.\nGRACIAS POR TU AMISTAD.\n❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️",
-                        "Doutora Natália 𝗺𝗮𝗿𝗰𝗼𝘂 𝘃𝗼𝗰𝗲̂!\n𝗡𝗮̃𝗼 𝗾𝘂𝗲𝗿𝗼 𝗽𝗮𝗿𝗲𝗰𝗲𝗿 𝗶𝗻𝘀𝗶𝘀𝘁𝗲𝗻𝘁𝗲, 𝗺𝗮𝘀 𝘀𝗲 𝗻𝗮̃𝗼 𝗮𝗰𝗲𝗶𝘁𝗼𝘂, 𝘁𝘂𝗱𝗼 𝗯𝗲𝗺! 😞\n𝗦𝗼́ 𝗾𝘂𝗲𝗿𝗶𝗮 𝗱𝗶𝘇𝗲𝗿 𝗾𝘂𝗲 𝗳𝗼𝗶 𝗱𝗲 𝗰𝗼𝗿𝗮𝗰̧𝗮̃𝗼 🙏🏻"
+                        "Doutora Natália 𝗺𝗮𝗿𝗰𝗼𝘂 𝘃𝗼𝗰𝗲̂!\n𝗡𝗮̃𝗼 𝗾𝘂𝗲𝗿𝗼 𝗽𝗮𝗿𝗲𝗰𝗲𝗿 𝗶𝗻𝘀𝗶𝘀𝘁𝗲𝗻𝘁𝗲, 𝗺𝗮𝘀 𝘀𝗲 𝗻𝗮̃𝗼 𝗮𝗰𝗲𝗶𝘁𝗼𝘂, 𝘁𝘂𝗱𝗼 𝗯𝗲𝗺! 😞\n𝗦𝗼́ 𝗾𝘂𝗲𝗿𝗶𝗮 𝗱𝗶𝘇𝗲𝗿 𝗾𝘂𝗲 𝗳𝗼𝗶 𝗱𝗲 𝗰𝗼𝗿𝗮𝗰̧𝗮̃𝗼 🙏🏻",
                         "Minha essência não pede permissão.\nGostei 🤷🏻‍♀️☘️50tona",
                         "Minha essência não pede opinião.❤️🔥"
+                    ]
                 }
             },
             germany: {
@@ -615,16 +613,24 @@
 
         const placeholderText = "Select mode & country, then hit Generate! ⚡";
 
+        // Perbaikan fungsi populateAll untuk tidak menghapus array "all" jika sudah ada isinya
         function populateAll(mode) {
             const modeData = data[mode].statuses;
             if (modeData.all !== undefined) {
-                modeData.all = [];
-                Object.keys(modeData).forEach(key => {
-                    if (key !== 'all') modeData.all = modeData.all.concat(modeData[key]);
-                });
+                // Hanya populate array "all" jika kosong
+                if (modeData.all.length === 0) {
+                    modeData.all = [];
+                    Object.keys(modeData).forEach(key => {
+                        if (key !== 'all') modeData.all = modeData.all.concat(modeData[key]);
+                    });
+                }
             }
         }
-        populateAll('english'); populateAll('french');
+        
+        populateAll('english'); 
+        populateAll('french');
+        populateAll('brazil');
+        populateAll('germany');
 
         function switchLanguage(lang) {
             currentLanguage = lang;
@@ -671,6 +677,12 @@
         function generateStatus() {
             const selectedCountry = document.getElementById('countrySelect').value;
             let list = data[currentLanguage].statuses[selectedCountry] || [];
+            
+            // Penanganan khusus untuk Brazil dan Germany
+            if ((currentLanguage === 'brazil' || currentLanguage === 'germany') && selectedCountry === 'all') {
+                list = data[currentLanguage].statuses.all;
+            }
+            
             if (list.length === 0) {
                 document.getElementById('status').innerHTML = '<div class="status-item">No status available for this country.</div>';
                 document.getElementById('status').classList.add('show');
