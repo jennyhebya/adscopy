@@ -119,7 +119,7 @@
             white-space: pre-line;
             opacity: 0;
             transform: scale(0.95);
-            transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
             backdrop-filter: blur(8px);
         }
         #status.show {
@@ -230,27 +230,23 @@
     <div class="container">
         <h1>🌐 Random Status Generator</h1>
         <p class="subtitle">Generate random messages with cool animations</p>
-        
+       
         <div class="mode-tabs">
             <button id="btn-english" class="mode-btn active" onclick="switchMode('english')">🌐 English Messages</button>
             <button id="btn-french" class="mode-btn" onclick="switchMode('french')">🇫🇷 French/EU</button>
             <button id="btn-brazil" class="mode-btn" onclick="switchMode('brazil')">🇧🇷 Brazil</button>
         </div>
-
         <div class="controls">
             <div class="country-selector">
                 <label id="countryLabel">Select Country:</label>
                 <select id="countrySelect"></select>
             </div>
-
             <div id="status">Select mode & country, then hit Generate! ⚡</div>
-
             <div class="button-group">
                 <button class="main-btn" onclick="generateStatus()">🎲 Generate</button>
                 <button class="main-btn" onclick="copyStatus()">📋 Copy</button>
             </div>
         </div>
-
         <div class="stats">
             <div class="stat-item">
                 <div class="stat-number" id="generatedCount">0</div>
@@ -262,7 +258,6 @@
             </div>
         </div>
     </div>
-
     <script>
         // Daftar kota per negara (English mode)
         const cities = {
@@ -276,7 +271,6 @@
             Finland: ["Helsinki", "Espoo", "Tampere", "Turku", "Oulu"]
         };
 
-        // ===== DATA (sama persis dengan sebelumnya) =====
         const data = {
             english: {
                 label: "🌍 Select Country:",
@@ -351,7 +345,7 @@
                         "Querido por qué no hablamos por Messenger siempre te digo es que esta aplicación hay cantidades de perfiles que uno no sabe si en realidad lo que uno escribe se le se vale escrito para la persona que no quiere o de pronto estos escritos se van para otro perfil eso es que no me gusta",
                         "Carolina solicitó ser tu amiga en Threads.\n¡Acepto!✅",
                         "👤 Carolina TE MENCIONÓ\n¡Te he amado desde el principio aquí en Threads!\nHay algo en ti que transmite ligereza, verdad y conexión.\nEn serio, tu presencia marca la diferencia.\nEres especial, y necesitaba decirlo.\nGRACIAS POR TU AMISTAD.\n❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️",
-						"Doutora Natália 𝗺𝗮𝗿𝗰𝗼𝘂 𝘃𝗼𝗰𝗲̂!\n𝗡𝗮̃𝗼 𝗾𝘂𝗲𝗿𝗼 𝗽𝗮𝗿𝗲𝗰𝗲𝗿 𝗶𝗻𝘀𝗶𝘀𝘁𝗲𝗻𝘁𝗲, 𝗺𝗮𝘀 𝘀𝗲 𝗻𝗮̃𝗼 𝗮𝗰𝗲𝗶𝘁𝗼𝘂, 𝘁𝘂𝗱𝗼 𝗯𝗲𝗺! 😞\n𝗦𝗼́ 𝗾𝘂𝗲𝗿𝗶𝗮 𝗱𝗶𝘇𝗲𝗿 𝗾𝘂𝗲 𝗳𝗼𝗶 𝗱𝗲 𝗰𝗼𝗿𝗮𝗰̧𝗮̃𝗼 🙏🏻",
+                        "Doutora Natália 𝗺𝗮𝗿𝗰𝗼𝘂 𝘃𝗼𝗰𝗲̂!\n𝗡𝗮̃𝗼 𝗾𝘂𝗲𝗿𝗼 𝗽𝗮𝗿𝗲𝗰𝗲𝗿 𝗶𝗻𝘀𝗶𝘀𝘁𝗲𝗻𝘁𝗲, 𝗺𝗮𝘀 𝘀𝗲 𝗻𝗮̃𝗼 𝗮𝗰𝗲𝗶𝘁𝗼𝘂, 𝘁𝘂𝗱𝗼 𝗯𝗲𝗺! 😞\n𝗦𝗼́ 𝗾𝘂𝗲𝗿𝗶𝗮 𝗱𝗶𝘇𝗲𝗿 𝗾𝘂𝗲 𝗳𝗼𝗶 𝗱𝗲 𝗰𝗼𝗿𝗮𝗰̧𝗮̃𝗼 🙏🏻"
                     ]
                 }
             }
@@ -384,7 +378,7 @@
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-${mode}`).classList.add('active');
             document.getElementById('countryLabel').textContent = data[mode].label;
-            
+           
             const select = document.getElementById('countrySelect');
             select.innerHTML = '';
             Object.keys(data[mode].countries).forEach(key => {
@@ -393,52 +387,51 @@
                 opt.textContent = data[mode].countries[key];
                 select.appendChild(opt);
             });
-            
+           
             const statusEl = document.getElementById('status');
             statusEl.textContent = `Mode ${mode.toUpperCase()} activated! Ready to generate ⚡`;
-            statusEl.classList.remove('show');
-            setTimeout(() => statusEl.classList.add('show'), 100);
+            statusEl.classList.add('show');
             currentText = '';
         }
 
+        // <<< FUNGSI YANG DIPERBAIKI >>>
         function generateStatus() {
             const select = document.getElementById('countrySelect');
             const selectedCountry = select.value;
             let list = data[currentMode].statuses[selectedCountry];
-            
+           
             if (!list || list.length === 0) {
-                document.getElementById('status').textContent = 'No data available.';
+                const statusEl = document.getElementById('status');
+                statusEl.textContent = 'No data available.';
+                statusEl.classList.add('show');
                 return;
             }
-            
+           
             const rand = Math.floor(Math.random() * list.length);
             let text = list[rand];
 
+            // Tambah kota untuk mode english
             if (currentMode === 'english' && selectedCountry !== 'all') {
                 const city = getRandomCity(selectedCountry);
                 if (city) {
-                    const countryEmoji = selectedCountry === 'Germany' ? '🇩🇪' : 
-                                       selectedCountry === 'Finland' ? '🇫🇮' : 
+                    const countryEmoji = selectedCountry === 'Germany' ? '🇩🇪' :
+                                       selectedCountry === 'Finland' ? '🇫🇮' :
                                        data[currentMode].countries[selectedCountry].split(' ')[1];
-                    text += `\n\nI'm from ${city}, ${countryEmoji}.\nWhere are you from? 📍`;
                 }
-            } else if (currentMode === 'english' && selectedCountry === 'all') {
-                const countriesWithCities = Object.keys(cities);
-                const randomCountry = countriesWithCities[Math.floor(Math.random() * countriesWithCities.length)];
-                const city = getRandomCity(randomCountry);
-                const countryEmoji = randomCountry === 'Germany' ? '🇩🇪' : 
-                                   randomCountry === 'Finland' ? '🇫🇮' : 
-                                   data[currentMode].countries[randomCountry]?.split(' ')[1] || randomCountry;
-                text += `\n\nI'm from ${city}, ${countryEmoji}.\nWhere are you from? 📍`;
             }
 
             currentText = text;
             const statusEl = document.getElementById('status');
+
+            // Update teks langsung
+            statusEl.textContent = text;
+
+            // Force reflow agar animasi selalu jalan
+            void statusEl.offsetWidth;
+
+            // Reset dan trigger animasi masuk
             statusEl.classList.remove('show');
-            setTimeout(() => {
-                statusEl.textContent = text;
-                statusEl.classList.add('show');
-            }, 300);
+            statusEl.classList.add('show');
 
             generatedCount++;
             animateNumber('generatedCount', generatedCount);
@@ -449,13 +442,13 @@
             navigator.clipboard.writeText(currentText).then(() => {
                 copiedCount++;
                 animateNumber('copiedCount', copiedCount);
-                
+               
                 const el = document.getElementById('status');
                 const orig = el.textContent;
                 el.textContent = '✅ COPIED SUCCESSFULLY!\n\n' + orig;
                 el.style.background = 'rgba(0, 255, 127, 0.3)';
                 el.style.borderLeftColor = '#00ff7f';
-                
+               
                 setTimeout(() => {
                     el.textContent = orig;
                     el.style.background = 'rgba(0, 0, 0, 0.4)';
@@ -469,7 +462,6 @@
             const start = parseInt(el.textContent) || 0;
             const duration = 800;
             const startTime = performance.now();
-
             function update(currentTime) {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
@@ -480,8 +472,7 @@
             requestAnimationFrame(update);
         }
 
-        function updateStats() { /* jika perlu */ }
-
+        // Inisialisasi
         switchMode('english');
     </script>
 </body>
