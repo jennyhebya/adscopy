@@ -22,7 +22,7 @@
             position: relative;
         }
 
-        /* Partikel bergerak - versi BESAR & CEPAT */
+        /* Partikel bergerak - BESAR & CEPAT */
         .particles {
             position: fixed;
             top: 0; left: 0;
@@ -395,7 +395,7 @@
             </div>
 
             <div id="status">
-                <div class="placeholder-text">Pilih bahasa & negara, lalu tekan Generate! ⚡</div>
+                <div class="placeholder-text">Select mode & country, then hit Generate! ⚡</div>
             </div>
 
             <div class="stats">
@@ -412,27 +412,26 @@
     </div>
 
     <script>
-        // Generate floating particles - versi BESAR & CEPAT
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const count = 40; // lebih banyak
+            const count = 40;
 
             for (let i = 0; i < count; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                const size = Math.random() * 30 + 10; // 10px - 40px
+                const size = Math.random() * 30 + 10;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 
                 particle.style.left = `${Math.random() * 100}vw`;
                 
-                const duration = Math.random() * 7 + 8; // 8-15 detik (lebih cepat)
+                const duration = Math.random() * 7 + 8;
                 particle.style.animationDuration = `${duration}s`;
                 
                 particle.style.animationDelay = `${Math.random() * 5}s`;
                 
-                particle.style.opacity = Math.random() * 0.5 + 0.4; // lebih terlihat
+                particle.style.opacity = Math.random() * 0.5 + 0.4;
                 
                 particlesContainer.appendChild(particle);
             }
@@ -456,7 +455,7 @@
                 },
                 statuses: {
                     USA: [
-                        "Hello\nMy name is Adara\nI am 49\nI wonder how far away we are\nCan you tell me where you are from?",
+                        "Hello\n\nMy name is Adara\nI am 49\nI wonder how far away we are\nCan you tell me where you are from?",
                         "You ve got style, old man! My name is anastasiarepgarcia\n. I'm 68 born in 1957 I'll hunt you if I must ✨ I said it once, I'm from USA 🇺🇸 Now your turn — where you are from? 👀 No Kings",
                         "My name is Fiona McCormick. I'm 62 and grateful.\nIs my age a problem? I was born in 1973",
                         "Hey old man, I'm Kourtney Haney\nDon't make me come hunt you down 😌🔥\nWhere you from again?\nRelax, I'm just checking our distance 😉\nDon't you dare leave — answer me ✨👀",
@@ -520,7 +519,7 @@
         let lastGeneratedText = '';
         let placeholderCopied = false;
 
-        const placeholderText = "Select mode & country, then hit Generate! ⚡";
+        const placeholderText = "Pilih bahasa & negara, lalu tekan Generate! ⚡";
 
         function populateAll(mode) {
             const modeData = data[mode].statuses;
@@ -591,24 +590,11 @@
                 const rand = Math.floor(Math.random() * list.length);
                 const text = list[rand];
                 lastGeneratedText = text;
-                const item = document.createElement('div');
-                item.className = 'status-item';
-                item.innerHTML = `
-                    <div class="status-text">${text.replace(/\n/g, '<br>')}</div>
-                    <button class="copy-inside-btn" onclick="copyThisStatus('${escapeJsString(text)}')">📋 Copy This</button>
-                `;
-                statusEl.appendChild(item);
+                addStatusItem(statusEl, text, true);
                 generatedCount++;
             } else {
                 list.forEach((text, index) => {
-                    const item = document.createElement('div');
-                    item.className = 'status-item';
-                    item.style.animationDelay = `${index * 0.1}s`;
-                    item.innerHTML = `
-                        <div class="status-text">${text.replace(/\n/g, '<br>')}</div>
-                        <button class="copy-inside-btn" onclick="copyThisStatus('${escapeJsString(text)}')">📋 Copy #${index + 1}</button>
-                    `;
-                    statusEl.appendChild(item);
+                    addStatusItem(statusEl, text, false, index * 0.1);
                 });
                 lastGeneratedText = list.join('\n\n---\n\n');
                 generatedCount += list.length;
@@ -623,23 +609,58 @@
             setTimeout(() => statusEl.classList.add('show'), 100);
         }
 
-        function escapeJsString(str) {
-            return str.replace(/'/g, "\\'").replace(/\n/g, '\\n').replace(/\r/g, '\\r');
+        function addStatusItem(container, text, isSingle = false, delay = 0) {
+            const item = document.createElement('div');
+            item.className = 'status-item';
+            item.style.animationDelay = `${delay}s`;
+            item.innerHTML = `
+                <div class="status-text">${text.replace(/\n/g, '<br>')}</div>
+                <button class="copy-inside-btn" onclick="copyAndRemove(this, '${escapeJsString(text)}', ${isSingle})">
+                    📋 Copy${isSingle ? ' This' : ''}
+                </button>
+            `;
+            container.appendChild(item);
         }
 
-        function copyThisStatus(text) {
+        function copyAndRemove(buttonElement, text, isSingleMode) {
             navigator.clipboard.writeText(text).then(() => {
                 copiedCount++;
                 animateNumber('copiedCount', copiedCount);
-                const btn = event.target;
-                const orig = btn.textContent;
-                btn.textContent = '✅ Copied!';
-                btn.style.background = 'linear-gradient(45deg, #00ff7f, #00cc66)';
+
+                const origText = buttonElement.textContent;
+                buttonElement.textContent = '✅ Copied!';
+                buttonElement.style.background = 'linear-gradient(45deg, #00ff7f, #00cc66)';
+                buttonElement.disabled = true;
+
+                const item = buttonElement.closest('.status-item');
+                item.style.transition = 'all 0.6s ease';
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px) scale(0.9)';
+
                 setTimeout(() => {
-                    btn.textContent = orig;
-                    btn.style.background = '';
+                    item.remove();
+
+                    if (isSingleMode) {
+                        lastGeneratedText = '';
+                    }
+
+                    const statusEl = document.getElementById('status');
+                    if (statusEl.children.length === 0) {
+                        lastGeneratedText = '';
+                    }
+                }, 600);
+
+                setTimeout(() => {
+                    buttonElement.textContent = origText;
+                    buttonElement.style.background = '';
                 }, 1500);
+            }).catch(err => {
+                console.error('Gagal copy: ', err);
             });
+        }
+
+        function escapeJsString(str) {
+            return str.replace(/'/g, "\\'").replace(/\n/g, '\\n').replace(/\r/g, '\\r');
         }
 
         function copyStatus() {
