@@ -351,7 +351,7 @@
                         "Querido por qué no hablamos por Messenger siempre te digo es que esta aplicación hay cantidades de perfiles que uno no sabe si en realidad lo que uno escribe se le se vale escrito para la persona que no quiere o de pronto estos escritos se van para otro perfil eso es que no me gusta",
                         "Carolina solicitó ser tu amiga en Threads.\n¡Acepto!✅",
                         "👤 Carolina TE MENCIONÓ\n¡Te he amado desde el principio aquí en Threads!\nHay algo en ti que transmite ligereza, verdad y conexión.\nEn serio, tu presencia marca la diferencia.\nEres especial, y necesitaba decirlo.\nGRACIAS POR TU AMISTAD.\n❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️",
-						Doutora Natália 𝗺𝗮𝗿𝗰𝗼𝘂 𝘃𝗼𝗰𝗲̂!\n𝗡𝗮̃𝗼 𝗾𝘂𝗲𝗿𝗼 𝗽𝗮𝗿𝗲𝗰𝗲𝗿 𝗶𝗻𝘀𝗶𝘀𝘁𝗲𝗻𝘁𝗲, 𝗺𝗮𝘀 𝘀𝗲 𝗻𝗮̃𝗼 𝗮𝗰𝗲𝗶𝘁𝗼𝘂, 𝘁𝘂𝗱𝗼 𝗯𝗲𝗺! 😞\n𝗦𝗼́ 𝗾𝘂𝗲𝗿𝗶𝗮 𝗱𝗶𝘇𝗲𝗿 𝗾𝘂𝗲 𝗳𝗼𝗶 𝗱𝗲 𝗰𝗼𝗿𝗮𝗰̧𝗮̃𝗼 🙏🏻",
+						"Doutora Natália 𝗺𝗮𝗿𝗰𝗼𝘂 𝘃𝗼𝗰𝗲̂!\n𝗡𝗮̃𝗼 𝗾𝘂𝗲𝗿𝗼 𝗽𝗮𝗿𝗲𝗰𝗲𝗿 𝗶𝗻𝘀𝗶𝘀𝘁𝗲𝗻𝘁𝗲, 𝗺𝗮𝘀 𝘀𝗲 𝗻𝗮̃𝗼 𝗮𝗰𝗲𝗶𝘁𝗼𝘂, 𝘁𝘂𝗱𝗼 𝗯𝗲𝗺! 😞\n𝗦𝗼́ 𝗾𝘂𝗲𝗿𝗶𝗮 𝗱𝗶𝘇𝗲𝗿 𝗾𝘂𝗲 𝗳𝗼𝗶 𝗱𝗲 𝗰𝗼𝗿𝗮𝗰̧𝗮̃𝗼 🙏🏻",
                     ]
                 }
             }
@@ -414,22 +414,22 @@
             const rand = Math.floor(Math.random() * list.length);
             let text = list[rand];
 
-            if (currentMode === 'english') {
-                // logic kota random sama seperti sebelumnya
-                if (selectedCountry !== 'all') {
-                    const city = getRandomCity(selectedCountry);
-                    if (city) {
-                        const emoji = /* sama */;
-                        text += `\n\nI'm from ${city}, ${emoji}.\nWhere are you from? 📍`;
-                    }
-                } else {
-                    // random all countries
-                    const countries = Object.keys(cities);
-                    const rc = countries[Math.floor(Math.random() * countries.length)];
-                    const city = getRandomCity(rc);
-                    const emoji = /* sama */;
-                    text += `\n\nI'm from ${city}, ${emoji}.\nWhere are you from? 📍`;
+            if (currentMode === 'english' && selectedCountry !== 'all') {
+                const city = getRandomCity(selectedCountry);
+                if (city) {
+                    const countryEmoji = selectedCountry === 'Germany' ? '🇩🇪' : 
+                                       selectedCountry === 'Finland' ? '🇫🇮' : 
+                                       data[currentMode].countries[selectedCountry].split(' ')[1];
+                    text += `\n\nI'm from ${city}, ${countryEmoji}.\nWhere are you from? 📍`;
                 }
+            } else if (currentMode === 'english' && selectedCountry === 'all') {
+                const countriesWithCities = Object.keys(cities);
+                const randomCountry = countriesWithCities[Math.floor(Math.random() * countriesWithCities.length)];
+                const city = getRandomCity(randomCountry);
+                const countryEmoji = randomCountry === 'Germany' ? '🇩🇪' : 
+                                   randomCountry === 'Finland' ? '🇫🇮' : 
+                                   data[currentMode].countries[randomCountry]?.split(' ')[1] || randomCountry;
+                text += `\n\nI'm from ${city}, ${countryEmoji}.\nWhere are you from? 📍`;
             }
 
             currentText = text;
