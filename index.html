@@ -22,7 +22,7 @@
             position: relative;
         }
 
-        /* Partikel bergerak di latar belakang */
+        /* Partikel bergerak - versi BESAR & CEPAT */
         .particles {
             position: fixed;
             top: 0; left: 0;
@@ -32,16 +32,22 @@
         }
         .particle {
             position: absolute;
-            background: rgba(0, 212, 255, 0.3);
+            background: rgba(0, 212, 255, 0.4);
             border-radius: 50%;
             animation: float linear infinite;
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
         }
         @keyframes float {
-            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            0% { 
+                transform: translateY(100vh) translateX(0); 
+                opacity: 0; 
+            }
             10% { opacity: 1; }
             90% { opacity: 1; }
-            100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
+            100% { 
+                transform: translateY(-150px) translateX(200px); 
+                opacity: 0; 
+            }
         }
 
         @keyframes gradientShift {
@@ -389,7 +395,7 @@
             </div>
 
             <div id="status">
-                <div class="placeholder-text">Select mode & country, then hit Generate! ⚡</div>
+                <div class="placeholder-text">Pilih bahasa & negara, lalu tekan Generate! ⚡</div>
             </div>
 
             <div class="stats">
@@ -406,23 +412,28 @@
     </div>
 
     <script>
-        // Generate floating particles
+        // Generate floating particles - versi BESAR & CEPAT
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const count = 30;
+            const count = 40; // lebih banyak
 
             for (let i = 0; i < count; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                const size = Math.random() * 8 + 4;
+                const size = Math.random() * 30 + 10; // 10px - 40px
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
+                
                 particle.style.left = `${Math.random() * 100}vw`;
-                particle.style.animationDuration = `${Math.random() * 20 + 15}s`;
-                particle.style.animationDelay = `${Math.random() * 10}s`;
-                particle.style.opacity = Math.random() * 0.6 + 0.2;
-
+                
+                const duration = Math.random() * 7 + 8; // 8-15 detik (lebih cepat)
+                particle.style.animationDuration = `${duration}s`;
+                
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particle.style.opacity = Math.random() * 0.5 + 0.4; // lebih terlihat
+                
                 particlesContainer.appendChild(particle);
             }
         }
@@ -462,7 +473,7 @@
                 }
             },
             french: {
-                label: "🌍 Choisir le pays :",
+                label: "🌍 Select Country:",
                 countries: {
                     all: "🌍 Tous les pays",
                     France: "🇫🇷 France",
@@ -489,7 +500,7 @@
                 }
             },
             brazil: {
-                label: "🌍 Escolher país:",
+                label: "🌍 Select Country:",
                 countries: { all: "🌍 Todos (Brasil)" },
                 statuses: {
                     all: [
@@ -507,9 +518,9 @@
         let generatedCount = 0;
         let copiedCount = 0;
         let lastGeneratedText = '';
-        let placeholderCopied = false; // Flag untuk menandai placeholder sudah dicopy
+        let placeholderCopied = false;
 
-        const placeholderText = "Pilih bahasa & negara, lalu tekan Generate! ⚡";
+        const placeholderText = "Select mode & country, then hit Generate! ⚡";
 
         function populateAll(mode) {
             const modeData = data[mode].statuses;
@@ -558,7 +569,7 @@
             if (!placeholderCopied) {
                 statusEl.innerHTML = `<div class="placeholder-text">${placeholderText}</div>`;
             } else {
-                statusEl.innerHTML = ''; // Kosong total jika placeholder sudah dicopy
+                statusEl.innerHTML = '';
             }
             statusEl.classList.add('show');
             lastGeneratedText = '';
@@ -574,7 +585,7 @@
             }
 
             const statusEl = document.getElementById('status');
-            statusEl.innerHTML = ''; // Hapus placeholder atau status lama
+            statusEl.innerHTML = '';
 
             if (generateMode === 'single') {
                 const rand = Math.floor(Math.random() * list.length);
@@ -603,7 +614,7 @@
                 generatedCount += list.length;
             }
 
-            placeholderCopied = false; // Reset flag saat generate baru
+            placeholderCopied = false;
 
             animateNumber('generatedCount', generatedCount);
 
@@ -634,18 +645,15 @@
         function copyStatus() {
             const statusEl = document.getElementById('status');
 
-            // Jika masih placeholder dan belum pernah dicopy
             if (!lastGeneratedText && statusEl.querySelector('.placeholder-text') && !placeholderCopied) {
                 navigator.clipboard.writeText(placeholderText).then(() => {
                     copiedCount++;
                     animateNumber('copiedCount', copiedCount);
                     placeholderCopied = true;
 
-                    // Efek visual sukses copy
                     statusEl.style.background = 'rgba(0, 255, 127, 0.3)';
                     statusEl.style.borderLeftColor = '#00ff7f';
                     
-                    // Hapus placeholder setelah 1 detik
                     setTimeout(() => {
                         statusEl.innerHTML = '';
                         statusEl.style.background = '';
@@ -655,7 +663,6 @@
                 return;
             }
 
-            // Jika ada status yang di-generate
             if (!lastGeneratedText) return;
 
             navigator.clipboard.writeText(lastGeneratedText).then(() => {
